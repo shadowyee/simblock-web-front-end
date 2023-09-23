@@ -94,7 +94,7 @@ export default {
             },
             {
                 icon: "Edit",
-                index: "/commandline",
+                index: "/terminal",
                 title: "命令行"
             }
         ];

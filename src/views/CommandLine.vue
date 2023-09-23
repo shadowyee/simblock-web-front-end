@@ -16,6 +16,7 @@
             <el-input v-model="inputCommand" placeholder="输入命令" @keydown.enter="runCommand()" />
         </div>
     </div>
+   
 </template>
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
@@ -32,7 +33,6 @@ const currentNode = ref([]);                        // 当前节点
 const nodes = reactive([]);                         // 当前网络下的所有节点
 const networksDataFromRequest = ref([]);            // 保存请求结果response
 const ws = reactive([]);
-
 
 // 更换网络，显示对应网络下的节点
 const changeNet = () => {

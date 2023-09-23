@@ -111,20 +111,13 @@ const routes = [
                 },
                 component: () => import("../views/NodesConnectStateChart.vue")
             }, {
-                path: "/commandline",
-                name: "commandline",
+                path: "/terminal",
+                name: "terminal",
                 meta: {
                     title: '命令行'
                 },
-                component: () => import("../views/CommandLine.vue")
-            }, {
-                path: "/shell",
-                name: "shell",
-                meta: {
-                    title: 'Shell'
-                },
-                component: () => import("../views/Shell.vue")
-            }, {
+                component: () => import("../views/Terminal.vue")
+            },  {
                 path: "/info",
                 name: "transaction_information",
                 meta: {
