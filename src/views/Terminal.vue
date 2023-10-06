@@ -31,17 +31,34 @@ const term = new Terminal({
     }
 })
 
+let ws = null;
 
-
-onMounted(() => {
+onMounted(async () => {
+    ws = await initTerminalWebSocket()
+    if (!ws instanceof WebSocket) return
     initXterm();
 })
+
+const initTerminalWebSocket = async () => {
+    const ws = new WebSocket(`ws://${location.hostname}:8080/api/v1/terminal/ws`)
+    ws.onmessage = (ev) => {
+        console.log(ev.data)
+    }
+    return new Promise((resolve, reject) => {
+        ws.onopen = () => {
+            resolve(ws)
+        }
+        ws.onerror = (ev) => {
+            reject("Terminal Connection WebSocket Error")
+        }
+    })
+}
 
 const initXterm = () => {
     // 创建terminal实例
     term.open(document.getElementById('xterm-container'))
     // 换行并输入起始符 $
-    var terminalPrompt = "~/Simblock$";
+    const terminalPrompt = "~/Simblock$";
     term.prompt = _ => {
         term.write("\r\n\x1b[33m" + terminalPrompt + "\x1b[0m ")
     }
@@ -76,7 +93,7 @@ const runFakeTerminal = (promptLength) => {
 
     term.prompt()
 
-    var cmd = "";
+    let cmd = "";
     // 添加事件监听器，支持输入方法
     term.onKey(e => {
         const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
