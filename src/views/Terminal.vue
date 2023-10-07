@@ -42,13 +42,15 @@ onMounted(async () => {
 const initTerminalWebSocket = async () => {
     const ws = new WebSocket(`ws://${location.hostname}:8080/api/v1/terminal/ws`)
     ws.onmessage = (ev) => {
-        console.log(ev.data)
+        term.write("\n")
+        term.write(ev.data)
+        term.prompt()
     }
     return new Promise((resolve, reject) => {
         ws.onopen = () => {
             resolve(ws)
         }
-        ws.onerror = (ev) => {
+        ws.onerror = () => {
             reject("Terminal Connection WebSocket Error")
         }
     })
@@ -120,21 +122,21 @@ const runFakeTerminal = (promptLength) => {
 }
 
 const runCommand = (cmd) => {
-    if (cmd.length > 0) {
-        axios.get('/prefix/' + cmd, {
-        }).then(function (response) {
-            console.log(response);
-            term.write("\n" + response.data);
-            term.prompt();
-        }).catch(function (error) {
-            console.log(error);
-            term.prompt();
-        })
+    if (cmd === "clear") {
+        term.clear()
+        term.prompt()
+        return
     }
-    else {
+    if (cmd.length === 0 || !ws) {
         term.prompt();
+        return
     }
-
+    ws.send(
+        JSON.stringify({
+            isClose: false,
+            cmd,
+        })
+    );
 }
 </script>
 
