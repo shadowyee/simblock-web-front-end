@@ -21,9 +21,11 @@ cd <your-project-name>
 npm install
 
 2. run
+(run it on localhost:)
 npm run dev                     // run vite
-(if you want to run it on your server:)
+
+(if you want to run it on the public/private network:)
 npm run build                   // build the project
 modify the package.json: "serve": "vite preview --host" (add --host to the "npm run serve" command)
-npm run serve                   // run the project on the server  
+npm run serve                   // run the project on the public/private network
 ``` 
