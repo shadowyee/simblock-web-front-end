@@ -113,7 +113,7 @@ const transaction = useTransactionsStore();
 // 建立web3协议
 let web3;
 const createWeb = () => {
-  web3 = new WebSocket(new WebSocket.providers.WebsocketProvider('ws://127.0.0.1:8080/api/v1/nodes/rpc/' + currentNet.value + '/' + currentNode.value));
+  web3 = new WebSocket(new WebSocket.providers.WebsocketProvider(`ws://${location.hostname}:8080/api/v1/nodes/rpc/` + currentNet.value + '/' + currentNode.value));
   console.log("websocket连接成功!");
 }
 

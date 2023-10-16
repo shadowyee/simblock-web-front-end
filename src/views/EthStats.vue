@@ -279,10 +279,10 @@ const connectByWebSocket = (netname, nodeid) => {
     let web3;
     if (typeof web3 !== 'undefined') {
         // web3.close();                            // 这不是websocket主动关闭的命令，暂时不设置websocket主动关闭，但是不知道是否有自动回收机制
-        web3 = new WebSocket(new WebSocket.providers.WebsocketProvider('ws://127.0.0.1:8080/api/v1/nodes/rpc/' + netname + '/' + nodeid));
+        web3 = new WebSocket(new WebSocket.providers.WebsocketProvider(`ws://${location.hostname}:8080/api/v1/nodes/rpc/` + netname + '/' + nodeid));
         console.log("websocket连接成功!");
     } else {
-        web3 = new WebSocket(new WebSocket.providers.WebsocketProvider('ws://127.0.0.1:8080/api/v1/nodes/rpc/' + netname + '/' + nodeid));
+        web3 = new WebSocket(new WebSocket.providers.WebsocketProvider(`ws://${location.hostname}:8080/api/v1/nodes/rpc/` + netname + '/' + nodeid));
         console.log("websocket连接成功!");
     }
     return web3;
