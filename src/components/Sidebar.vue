@@ -96,6 +96,11 @@ export default {
                 icon: "Edit",
                 index: "/terminal",
                 title: "命令行"
+            },
+            {
+                icon: "Edit",
+                index: "/log",
+                title: "日志"
             }
         ];
 
@@ -139,3 +144,4 @@ export default {
     height: 100%;
 }
 </style>
+

@@ -152,6 +152,13 @@ const routes = [
                     title: '登录'
                 },
                 component: () => import( /* webpackChunkName: "login" */ "../views/Login.vue")
+            }, {
+                path: "/log",
+                name: "log",
+                meta: {
+                    title: '日志'
+                },
+                component: () => import("../views/Log.vue")
             }
         ]
     }
