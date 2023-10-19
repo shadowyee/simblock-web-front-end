@@ -20,7 +20,7 @@ let ws = null;
 
 onMounted(async () => {
     ws = await initTerminalWebSocket()
-    if (!ws instanceof WebSocket) return
+    if (!(ws instanceof WebSocket)) return
     initXterm();
 })
 
