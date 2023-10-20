@@ -98,7 +98,7 @@ export default {
                 title: "命令行"
             },
             {
-                icon: "Edit",
+                icon: "Memo",
                 index: "/log",
                 title: "日志"
             }
