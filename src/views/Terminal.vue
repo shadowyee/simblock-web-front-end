@@ -1,6 +1,6 @@
 <template>
     <div>
-        <link rel="stylesheet" href="../../node_modules/xterm/css/xterm.css" />
+        <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
         <div id="xterm-container"></div>
     </div>
 </template>
