@@ -1,6 +1,5 @@
 <template>
     <div>
-        <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
         <div id="xterm-container"></div>
     </div>
 </template>
@@ -38,10 +37,16 @@ const initTerminalWebSocket = async () => {
 
 const initXterm = () => {
     // 创建terminal实例
-    term.open(document.getElementById('xterm-container'))
+    const container = document.getElementById('xterm-container')
+    container.innerHTML = ""
+    term.open(container)
     const attachAddon = new AttachAddon(ws)
     term.loadAddon(attachAddon)
 }
 
 
 </script>
+
+<style>
+  @import '../../node_modules/xterm/css/xterm.css';
+</style>
