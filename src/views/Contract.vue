@@ -31,7 +31,7 @@
 
     <div>
       <el-dialog title="字节码部署" v-model="byteVisible" width="50">
-        <el-form label-width="120px">
+        <el-form label-width="120px" v-loading="byteLoading">
           <el-form-item label="合约abi">
             <el-input v-model="abicode" placeholder="Please input abi"></el-input>
           </el-form-item>
@@ -47,8 +47,8 @@
         </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="byteVisible=false">取 消</el-button>
-            <el-button type="primary" @click="sendAsByte()">部 署</el-button>
+            <el-button @click="byteVisible=false" :loading="byteLoading">取 消</el-button>
+            <el-button type="primary" @click="sendAsByte()" :loading="byteLoading">部 署</el-button>
           </span>
         </template>
       </el-dialog>
@@ -232,6 +232,7 @@ const updateContractList = () => {
 
 // 部署合约
 const dialogVisible = ref(false);
+const byteLoading = ref(false);
 const contractParams = ref("");
 const byteVisible = ref(false);
 const nodepwd = ref("");
@@ -252,6 +253,7 @@ const setByteVisible = () => {
 }
 
 const sendAsByte = () => {
+  byteLoading.value = true;
   const abicodeJSON = JSON.parse(abicode.value);
 
   // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html
@@ -290,13 +292,14 @@ const sendAsByte = () => {
       });
       transactions.setTransItem(currentNet.value, currentNode.value, hash.value);
       updateContractList();
+      byteLoading.value = false;
     })
   });
 }
 
 const argsList = ref("");
 const methodName = ref('');
-const inputDialog = ref(false)
+const inputDialog = ref(false);
 const currentAbi = ref() as any;
 const currentContract = ref() as any;
 const contractInfo = ref();
