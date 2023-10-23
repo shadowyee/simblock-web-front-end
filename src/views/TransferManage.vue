@@ -38,9 +38,9 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <el-dialog title="添加账户" v-model="accountDialogVisble" width="30%">
-      <el-form ref="accountFormRef" :model="accountForm" status-icon :rules="rules" label-width="120px">
+      <el-form ref="accountFormRef" :model="accountForm" status-icon :rules="rules" label-width="120px" v-loading="accountDialogLoading">
         <el-form-item label="网络">
           <el-input v-model="currentNet" disabled type="fromAddr" />
         </el-form-item>
@@ -58,7 +58,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button type="primary" key="primary" @click="randomHex()" link>随机生成64位密钥</el-button>
-          <el-button type="primary" @click="handleAdd()">添 加</el-button>
+          <el-button type="primary" @click="handleAdd()" :loading="accountDialogLoading">添 加</el-button>
         </span>
       </template>
     </el-dialog>
@@ -205,6 +205,7 @@ const updateAccountList = () => {
 }
 
 const accountDialogVisble = ref(false);
+const accountDialogLoading = ref(false);
 const accountForm = reactive({
   net: "",
   node: "",
@@ -222,6 +223,7 @@ const openAccountDialog = () => {
 const handleAdd = () => {
     // ElMessage.info("调试信息：进入添加账户处理函数" + currentNode.value)  // 调试信息
     // 1、当前节点不属于当前网络 2、当前节点未启动  3、其他（正常情况）
+    accountDialogLoading.value = true;
     if (!(currentNode.value in currentNodeStatusInfo)) {
         ElMessage.error("创建失败，已切换net，但未切换node（该node不属于当前net）");
     }
@@ -235,9 +237,11 @@ const handleAdd = () => {
             console.log("地址：" + value)
             updateAccountList();
             accountDialogVisble.value = false;
+            accountDialogLoading.value = false;
         }).catch(function (error) {
             console.log(error)
             ElMessage.error("创建失败");
+            accountDialogLoading.value = false;
         })
     }
 }
